@@ -1,13 +1,16 @@
 ---
- pool: default
- vmImage: ubuntu-latest
- trigger:
-   - main
-  steps:
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      mavenOptions: '-Xmx3072m'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.11'
-      goals: 'package'
+pool:
+ name: default
+
+ trigger: 
+     - main
+steps:
+  - template: /templates/temp.yml
+
+
+
+
+
+
+
+
