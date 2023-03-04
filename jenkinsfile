@@ -1,0 +1,11 @@
+pipeline {
+    agent none
+    stages {
+        stage('vcs') {
+            steps {
+                git url: 'https://github.com/Narendra208/spring-petclinic.git',
+                branch: 'main'
+            }
+        }
+    }
+}
