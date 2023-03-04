@@ -9,8 +9,8 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh '.gradle init'
-                sh '.gradle build'
+                sh 'gradle init'
+                sh 'gradle build'
             }
        }
     }
