@@ -1,5 +1,5 @@
 pipeline {
-    agent { none }
+    agent { GRADLE_7.5.1 }
     stages {
         stage('vcs') {
             steps {
@@ -7,9 +7,11 @@ pipeline {
                 branch: 'main'
             }
         }
-    }stage('build') {
-        steps{
-            sh './mvnw package'
-        }
+        stage('build') {
+            steps {
+                sh '.gradlew init'
+                sh '.gradlew build'
+            }
+       }
     }
-}
+}    
