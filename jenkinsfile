@@ -9,7 +9,6 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'gradle init'
                 sh 'gradle build'
             }
        }
