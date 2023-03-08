@@ -1,5 +1,6 @@
 pipeline {
-    agent {label 'GRADLE_7.5.1'}
+    agent {label 'MAVEN_3.8.7'}
+    triggers { pollSCM('* * * * *')}
     stages {
         stage('vcs') {
             steps {
@@ -9,7 +10,21 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh './gradlew build'
+                sh './mvnw package'
+            }
+       }
+        stage('sonar analysis') {
+            steps {
+                // performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
+                withSonarQubeEnv('sonar') {
+                    sh './mvnw clean package sonar:sonar -Dsonar.organization=narendra -Dsonar.projectKey=narendra'
+            }
+        }
+        stage('post build') {
+            steps {
+                archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
+                                 onlyIfSuccessful: true
+                junit testResults: '**/surefire-reports/TEST-*.xml'
             }
        }
     }
