@@ -24,8 +24,8 @@ pipeline {
                 sh './mvnw clean verify sonar:sonar \
                     -Dsonar.login=2052d2d56bbb5e0f82d1ef69a02cc728ea50c459 \
                     -Dsonar.host.url=https://sonarcloud.io \
-                    -Dsonar.organization=Narendra208 \
-                    -Dsonar.projectKey=firstsonarcloud123'
+                    -Dsonar.organization=Narendra\
+                    -Dsonar.projectKey=narendra'
             }
         }
     }
