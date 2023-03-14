@@ -17,6 +17,7 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
                                  onlyIfSuccessful: true
                 junit testResults: '**/surefire-reports/TEST-*.xml'
+            }
         }
         stage('sonarcloud') {
             steps {
@@ -24,12 +25,12 @@ pipeline {
                     -Dsonar.login=2052d2d56bbb5e0f82d1ef69a02cc728ea50c459 \
                     -Dsonar.host.url=https://sonarcloud.io \
                     -Dsonar.organization=Narendra208 \
-                -Dsonar.projectKey=firstsonarcloud123'
+                    -Dsonar.projectKey=firstsonarcloud123'
             }
         }
     }
 }
-}           
+         
     
 
           
