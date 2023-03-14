@@ -7,6 +7,13 @@ pipeline {
                 branch: 'relase'
             }
         }
+         stage('post build') {
+            steps {
+                archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
+                                 onlyIfSuccessful: true
+                junit testResults: '**/surefire-reports/TEST-*.xml'
+            }
+        }      
         stage('sonarcloud') {
             steps {
                 sh './mvnw clean verify sonar:sonar \
@@ -51,16 +58,10 @@ pipeline {
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
                 )
-                //sh "mvn ${params.MAVEN_GOAL}"
+                
             }
         }
-        stage('post build') {
-            steps {
-                archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
-                                 onlyIfSuccessful: true
-                junit testResults: '**/surefire-reports/TEST-*.xml'
-           }
-        }
+       
     }
 }           
 
