@@ -7,11 +7,7 @@ pipeline {
                 branch: 'relase'
             }
         }
-        stage('build') {
-            steps {
-                sh './mvnw package'
-            }
-        }
+
         stage('post build') {
             steps {
                 archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
@@ -36,7 +32,7 @@ pipeline {
                     credentialsId: 'jfrog23'
                 )
                 rtMavenDeployer (
-                    id: "MAVEN_DEPLOYER",
+                    id: "maven",
                     serverId: "ARTIFACTORY_SERVER",
                     releaseRepo: 'libs-release',
                     snapshotRepo: 'libs-snapshot'
