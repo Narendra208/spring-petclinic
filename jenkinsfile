@@ -5,27 +5,8 @@ pipeline {
         stage('vcs') {
             steps {
                 git url: 'https://github.com/Narendra208/spring-petclinic.git',
-                branch: 'main'
+                branch: 'develop'
             }
         }
-        stage('build') {
-            steps {
-                sh './mvnw package'
-            }
-       }
-        stage('sonar analysis') {
-            steps {
-                // performing sonarqube analysis with "withSonarQubeENV(<Name of Server configured in Jenkins>)"
-                withSonarQubeEnv('sonar') {
-                    sh './mvnw clean package sonar:sonar -Dsonar.organization=narendra -Dsonar.projectKey=narendra'
-            }
-        }
-        stage('post build') {
-            steps {
-                archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
-                                 onlyIfSuccessful: true
-                junit testResults: '**/surefire-reports/TEST-*.xml'
-            }
-       }
-    }
-}    
+    }    
+}
