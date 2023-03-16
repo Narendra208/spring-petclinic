@@ -4,21 +4,16 @@ pipeline {
         stage('vcs') {
             steps {
                 git url: 'https://github.com/Narendra208/spring-petclinic.git',
-                branch: 'develop'
+                branch: 'relase'
             }
         }
-        stage('build') {
-            steps {
-                sh './mvnw package'
-            }
-        }
-        stage('post build') {
+         stage('post build') {
             steps {
                 archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
                                  onlyIfSuccessful: true
                 junit testResults: '**/surefire-reports/TEST-*.xml'
             }
-        }
+        }      
         stage('sonarcloud') {
             steps {
                 sh './mvnw clean verify sonar:sonar \
@@ -55,21 +50,20 @@ pipeline {
             }
             steps {
                 rtMavenRun (
-                    tool: 'MAVEN_DEFAULT',
+                    tool: 'maven',
                     pom: 'pom.xml',
-                    goals: 'clean install',
+                    goals: 'package',
                     deployerId: "MAVEN_DEPLOYER"
                 )
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
                 )
-                //sh "mvn ${params.MAVEN_GOAL}"
+                
             }
         }
+       
     }
-}
-         
-    
+}           
 
           
     
